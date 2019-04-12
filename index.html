@@ -7,5 +7,12 @@
 		<script type="text/javascript" src="script.js"></script>	 
    	</head>
    	<body>
+   		<h1 align="center">Candy Visualization</h1>
+
+   		<script>
+		    d3.queue()
+		      .defer(d3.csv, "candy.csv")
+		      .await(createBubbleChart);
+  		</script>
 	</body>
 </html>
