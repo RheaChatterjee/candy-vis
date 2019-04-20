@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
   margin: 10px;
   padding: 0;
   font-family: sans-serif;
@@ -41,7 +42,7 @@ circle {
 
 .selected {
   stroke: black;
-  fill:white;
+  fill: white;
 }
 .arc text {
   font: 10px sans-serif;
@@ -55,4 +56,32 @@ circle {
 .title {
   fill: teal;
   font-weight: bold;
+}
+
+.dot--hovered {
+  /* 
+    The definition here means that the styles defined below apply
+    (1) If an element has "dot--hovered",
+    OR
+    (2) If an element has both "dot--selected" and "dot--hovered" classes
+    
+    Because of (2), the styles here will take precedence and overwrite the styles
+    define for the ".dot--selected" class alone. This means that hovering effect
+    takes precedence over brush selection. If a dot is both hovered and inside the brush,
+    it will be styled as if it is hovered.
+  */
+  fill: rgba(255, 255, 0, 0.5);
+}
+
+div.tooltip {
+  position: absolute;
+  text-align: center;
+  width: 250px;
+  height: 250px;
+  padding: 2px;
+  font: 12px sans-serif;
+  background: lightsteelblue;
+  border: 0px;
+  border-radius: 8px;
+  pointer-events: none;
 }
