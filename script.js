@@ -9,7 +9,7 @@ function createBubbleChart(error, colleges) {
 	var debts = colleges.map(function(college) { return +college.MedianDebt; });
 
 	var regions = d3.set(colleges.map(function(college) { return college.Region; }));
-	var regionColorScale = d3.scaleOrdinal(d3.schemeCategory10)
+	var regionColorScale = d3.scaleOrdinal(["#8dd3c7","#bebada","#fb8072","#80b1d3","#fdb462","#b3de69","#fccde5"])
 				.domain(regions.values());
 	var forceStrength = 0.07;
 	var costScaleX,
@@ -33,8 +33,8 @@ function createBubbleChart(error, colleges) {
 	var showPublic = true;
 	var showPrivate = true;
 
-	var width = 2000;
-	var height = 1000;
+	var width = 1500;
+	var height = 900;
 	var svg;
 	var circleScale = d3.scaleSqrt()
 		.domain(d3.extent(populations))
@@ -47,6 +47,8 @@ function createBubbleChart(error, colleges) {
 	createForces();
 	createForceSimulation();
 	createAxes();
+
+	makeLegend();
 
 	function createSVG() {
 		svg = d3.select("#chart")
@@ -254,7 +256,7 @@ function createBubbleChart(error, colleges) {
 
 	function createYDebtForces() {
 		debtScaleY = d3.scaleLinear()
-			.domain(d3.extent(familyIncomes))
+			.domain(d3.extent(debts))
 			.range([height-40, 0]);
 			
 		return {
@@ -359,7 +361,7 @@ function createBubbleChart(error, colleges) {
         radius = Math.min(width, height) / 2,
         g = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-    var color = d3.scaleOrdinal(['#4daf4a','#377eb8','#ff7f00','#984ea3','#e41a1c']);
+    var color = d3.scaleOrdinal(["#66c2a5","#fc8d62","#8da0cb","#e78ac3","#a6d854","#ffd92f","#e5c494"]);
 
     // Generate the pie
     var pie = d3.pie();
@@ -382,6 +384,36 @@ function createBubbleChart(error, colleges) {
             return color(i);
         })
         .attr("d", arc);
+  }
+
+  function makeLegend() {
+  	  var svg = d3.select("#bubbleChartLegend")
+  	  console.log("test");
+	  var keys = regions.values();
+
+	  var color = d3.scaleOrdinal()
+	    .domain(keys)
+	    .range(["#8dd3c7","#bebada","#fb8072","#80b1d3","#fdb462","#b3de69","#fccde5"]);
+
+	  svg.selectAll("mydots")
+	    .data(keys)
+	    .enter()
+	    .append("circle")
+	      .attr("cx", function(d,i){ return 20 + 170*i })
+	      .attr("cy", 10) 
+	      .attr("r", 7)
+	      .style("fill", function(d){ return color(d)})
+
+	  svg.selectAll("mylabels")
+	    .data(keys)
+	    .enter()
+	    .append("text")
+	      .attr("x", function(d,i){ return 30 + 170*i})
+	      .attr("y", 10) 
+	      .style("fill", function(d){ return color(d)})
+	      .text(function(d){ return d})
+	      .attr("text-anchor", "left")
+	      .style("alignment-baseline", "middle")
   }
 
 }

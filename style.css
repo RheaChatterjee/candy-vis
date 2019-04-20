@@ -56,3 +56,8 @@ circle {
   fill: teal;
   font-weight: bold;
 }
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 320px auto;
+}
