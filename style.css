@@ -38,3 +38,21 @@ circle {
 .continent-key-element text {
   fill: white;
 }
+
+.selected {
+  stroke: black;
+  fill:white;
+}
+.arc text {
+  font: 10px sans-serif;
+  text-anchor: middle;
+}
+
+.arc path {
+  stroke: #fff;
+}
+
+.title {
+  fill: teal;
+  font-weight: bold;
+}

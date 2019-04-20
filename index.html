@@ -8,25 +8,33 @@
   <script src="https://d3js.org/d3.v4.min.js"></script>
   <script src="https://d3js.org/d3-queue.v3.min.js"></script>
   <script src="script.js"></script>
-  <title>D3 Country Bubble Chart</title>
+  <title>Colleges Bubble Chart</title>
 </head>
 <body>
 
-<div id="controls">
-  <span>
-    <label><input id="combine" type="radio" name="grouping" value="combine" checked>Combine</label>
-    <label><input id="continents" type="radio" name="grouping" value="continents">Continents</label>
-    <label><input id="population" type="radio" name="grouping" value="population">Population</label>
-  </span>
-</div>
-<div id="country-info"></div>
-<div id="bubble-chart"></div>
+<div id="chart"></div>
+<select id="yaxis">
+  <option value="earnings">Mean Earnings</option>
+  <option value="cost">Average Cost</option>
+  <option value="expenditures">Expenditure Per Student</option>
+  <option value="salaries">Average Faculty Salary</option>
+  <option value="familyIncomes">Average Family Income</option>
+  <option value="debts">Median Debt</option>
+</select>
+<select id="xaxis">
+  <option value="earnings">Mean Earnings</option>
+  <option value="cost">Average Cost</option>
+  <option value="expenditures">Expenditure Per Student</option>
+  <option value="salaries">Average Faculty Salary</option>
+  <option value="familyIncomes">Average Family Income</option>
+  <option value="debts">Median Debt</option>
+</select>
 
 <script>
   d3.queue()
     .defer(d3.csv, "colleges.csv")
     .await(createBubbleChart);
 </script>
-
+<svg id="pieChart" width="500" height="400"></svg>
 </body>
 </html>
