@@ -30,14 +30,14 @@ function createBubbleChart(error, colleges) {
   var regionColorScale = d3
     .scaleOrdinal([
       "#8dd3c7",
+      "#4eb3d3",
       "#bebada",
       "#fb8072",
       "#80b1d3",
       "#fdb462",
       "#b3de69",
-      "#ecb0b8",
-      "#831c26",
-      "#b7707d"
+      "#fccde5",
+      "#f768a1"
     ])
     .domain(regions.values());
   var forceStrength = 0.07;
@@ -464,7 +464,7 @@ function createBubbleChart(error, colleges) {
       "#8da0cb",
       "#e78ac3",
       "#a6d854",
-      "#ffd92f",
+      "#F5D6C6",
       "#e5c494"
     ]);
 
@@ -492,6 +492,19 @@ function createBubbleChart(error, colleges) {
         return color(i);
       })
       .attr("d", arc);
+    var keys = [
+      " White",
+      " Black",
+      " Hispanic",
+      " Asian",
+      " Biracial",
+      " American Indian",
+      " Pacific Islander"
+    ];
+    var pieLabels = d3
+      .selectAll("#myL")
+      .data(data)
+      .text((d, i) => d3.format(".0%")(d) + keys[i]);
   }
 
   function createHover(college, thisCircle) {
@@ -511,6 +524,12 @@ function createBubbleChart(error, colleges) {
           "Region: " +
           "</b>" +
           college.Region +
+          "<br/>" +
+          "<br/>" +
+          "<b>" +
+          "Undergraduate Population: " +
+          "</b>" +
+          college.UndergradPopulation +
           "<br/>" +
           "<br/>" +
           "<b>" +
@@ -578,14 +597,14 @@ function createBubbleChart(error, colleges) {
       .domain(keys)
       .range([
         "#8dd3c7",
+        "#4eb3d3",
         "#bebada",
         "#fb8072",
         "#80b1d3",
         "#fdb462",
         "#b3de69",
-        "#ecb0b8",
-        "#831c26",
-        "#b7707d"
+        "#fccde5",
+        "#f768a1"
       ]);
 
     svg
