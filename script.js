@@ -28,7 +28,15 @@ function createBubbleChart(error, colleges) {
     })
   );
   var regionColorScale = d3
-    .scaleOrdinal(d3.schemeCategory10)
+    .scaleOrdinal([
+      "#8dd3c7",
+      "#bebada",
+      "#fb8072",
+      "#80b1d3",
+      "#fdb462",
+      "#b3de69",
+      "#fccde5"
+    ])
     .domain(regions.values());
   var forceStrength = 0.07;
   var costScaleX,
@@ -52,25 +60,21 @@ function createBubbleChart(error, colleges) {
   var showPublic = true;
   var showPrivate = true;
 
-  var width = 2000;
-  var height = 1000;
+  var width = 1500;
+  var height = 900;
   var svg;
   var circleScale = d3
     .scaleSqrt()
     .domain(d3.extent(populations))
     .range([3, 35]);
   var Xforces, Yforces, forceSimulation;
-  var div = d3
-    .select("body")
-    .append("div")
-    .attr("class", "tooltip")
-    .style("opacity", 0);
-  var formatTime = d3.timeFormat("%e %B");
   createSVG();
   createChart();
   createForces();
   createForceSimulation();
   createAxes();
+
+  makeLegend();
 
   function createSVG() {
     svg = d3
@@ -118,14 +122,6 @@ function createBubbleChart(error, colleges) {
       .append("circle")
       .on("click", function(d) {
         createPieChart(d);
-      })
-      .on("mouseover", function(d) {
-        var thisCircle = d3.select(this);
-        createHover(d, thisCircle);
-      })
-      .on("mouseleave", function(d) {
-        var thisCircle = d3.select(this);
-        clearHover(d, thisCircle);
       })
       .attr("id", function(d, i) {
         return "circle-" + i;
@@ -330,7 +326,7 @@ function createBubbleChart(error, colleges) {
   function createYDebtForces() {
     debtScaleY = d3
       .scaleLinear()
-      .domain(d3.extent(familyIncomes))
+      .domain(d3.extent(debts))
       .range([height - 40, 0]);
 
     return {
@@ -341,10 +337,6 @@ function createBubbleChart(error, colleges) {
         .strength(forceStrength)
     };
   }
-
-  d3.selectAll("#circle").on("mouseenter", function(d) {
-    d3.select(this).classed("dot--hovered", true);
-  });
 
   d3.select("#xaxis").on("change", function() {
     var sect = document.getElementById("xaxis");
@@ -450,11 +442,13 @@ function createBubbleChart(error, colleges) {
         .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
     var color = d3.scaleOrdinal([
-      "#4daf4a",
-      "#377eb8",
-      "#ff7f00",
-      "#984ea3",
-      "#e41a1c"
+      "#66c2a5",
+      "#fc8d62",
+      "#8da0cb",
+      "#e78ac3",
+      "#a6d854",
+      "#ffd92f",
+      "#e5c494"
     ]);
 
     // Generate the pie
@@ -555,5 +549,55 @@ function createBubbleChart(error, colleges) {
       .transition()
       .duration(500)
       .style("opacity", 0);
+  }
+  function makeLegend() {
+    var svg = d3.select("#bubbleChartLegend");
+    console.log("test");
+    var keys = regions.values();
+
+    var color = d3
+      .scaleOrdinal()
+      .domain(keys)
+      .range([
+        "#8dd3c7",
+        "#bebada",
+        "#fb8072",
+        "#80b1d3",
+        "#fdb462",
+        "#b3de69",
+        "#fccde5"
+      ]);
+
+    svg
+      .selectAll("mydots")
+      .data(keys)
+      .enter()
+      .append("circle")
+      .attr("cx", function(d, i) {
+        return 20 + 170 * i;
+      })
+      .attr("cy", 10)
+      .attr("r", 7)
+      .style("fill", function(d) {
+        return color(d);
+      });
+
+    svg
+      .selectAll("mylabels")
+      .data(keys)
+      .enter()
+      .append("text")
+      .attr("x", function(d, i) {
+        return 30 + 170 * i;
+      })
+      .attr("y", 10)
+      .style("fill", function(d) {
+        return color(d);
+      })
+      .text(function(d) {
+        return d;
+      })
+      .attr("text-anchor", "left")
+      .style("alignment-baseline", "middle");
   }
 }

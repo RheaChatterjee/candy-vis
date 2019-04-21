@@ -85,3 +85,8 @@ div.tooltip {
   border-radius: 8px;
   pointer-events: none;
 }
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 320px auto;
+}

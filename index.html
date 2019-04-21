@@ -11,30 +11,73 @@
   <title>Colleges Bubble Chart</title>
 </head>
 <body>
-
-<div id="chart"></div>
-<select id="yaxis">
-  <option value="earnings">Mean Earnings</option>
-  <option value="cost">Average Cost</option>
-  <option value="expenditures">Expenditure Per Student</option>
-  <option value="salaries">Average Faculty Salary</option>
-  <option value="familyIncomes">Average Family Income</option>
-  <option value="debts">Median Debt</option>
-</select>
-<select id="xaxis">
-  <option value="earnings">Mean Earnings</option>
-  <option value="cost">Average Cost</option>
-  <option value="expenditures">Expenditure Per Student</option>
-  <option value="salaries">Average Faculty Salary</option>
-  <option value="familyIncomes">Average Family Income</option>
-  <option value="debts">Median Debt</option>
-</select>
+  <div class="grid-container">
+    <div class="grid-item">
+      <select id="yaxis" style="display:inline-block; margin-left: 155px">
+        <option value="earnings">Mean Earnings</option>
+        <option value="cost">Average Cost</option>
+        <option value="expenditures">Expenditure Per Student</option>
+        <option value="salaries">Average Faculty Salary</option>
+        <option value="familyIncomes">Average Family Income</option>
+        <option value="debts">Median Debt</option>
+      </select>
+      <svg id="pieChart" width="300" height="300" style="margin-top: 400px;"></svg>
+      <svg id="pieChartLegend" height=200 width=300>
+    </div>
+    <div class="grid-item">
+      <div id="chart"></div>
+    </div>
+    <div class="grid-item">
+      
+    </div>
+    <div class="grid-item">
+      <select id="xaxis">
+        <option value="earnings">Mean Earnings</option>
+        <option value="cost">Average Cost</option>
+        <option value="expenditures">Expenditure Per Student</option>
+        <option value="salaries">Average Faculty Salary</option>
+        <option value="familyIncomes">Average Family Income</option>
+        <option value="debts">Median Debt</option>
+      </select>
+      <svg id="bubbleChartLegend" height=20 width=1500>
+    </div>
+  </div>
 
 <script>
   d3.queue()
     .defer(d3.csv, "colleges.csv")
     .await(createBubbleChart);
 </script>
-<svg id="pieChart" width="500" height="400"></svg>
+
+<script>
+  var svg = d3.select("#pieChartLegend")
+
+  var keys = ["% White", "% Black", "% Hispanic", "% Asian", "% Biracial", "% American Indian", "% Pacific Islander"]
+
+  var color = d3.scaleOrdinal()
+    .domain(keys)
+    .range(["#66c2a5","#fc8d62","#8da0cb","#e78ac3","#a6d854","#ffd92f","#e5c494"]);
+
+  svg.selectAll("mydots")
+    .data(keys)
+    .enter()
+    .append("circle")
+      .attr("cx", 100)
+      .attr("cy", function(d,i){ return 20 + i*25}) 
+      .attr("r", 7)
+      .style("fill", function(d){ return color(d)})
+
+  svg.selectAll("mylabels")
+    .data(keys)
+    .enter()
+    .append("text")
+      .attr("x", 120)
+      .attr("y", function(d,i){ return 20 + i*25}) 
+      .style("fill", function(d){ return color(d)})
+      .text(function(d){ return d})
+      .attr("text-anchor", "left")
+      .style("alignment-baseline", "middle")
+</script>
+
 </body>
 </html>
