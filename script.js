@@ -475,16 +475,13 @@ function createBubbleChart(error, colleges) {
       "#e5c494"
     ]);
 
-    // Generate the pie
     var pie = d3.pie();
 
-    // Generate the arcs
     var arc = d3
       .arc()
       .innerRadius(0)
       .outerRadius(radius);
 
-    //Generate groups
     var arcs = g
       .selectAll("arc")
       .data(pie(data))
@@ -492,7 +489,7 @@ function createBubbleChart(error, colleges) {
       .append("g")
       .attr("class", "arc");
 
-    //Draw arc paths
+    //Draw different sections
     arcs
       .append("path")
       .attr("fill", function(d, i) {
