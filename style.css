@@ -90,3 +90,10 @@ div.tooltip {
   display: grid;
   grid-template-columns: 320px auto;
 }
+
+.title {
+  fill: teal;
+  font-weight: bold;
+  font-family: monospace;
+  font-size: 20px;
+}

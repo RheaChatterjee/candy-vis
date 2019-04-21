@@ -93,6 +93,13 @@ function createBubbleChart(error, colleges) {
       .attr("height", height + 20);
   }
 
+  svg
+    .append("g")
+    .attr("transform", "translate(" + (width / 2 - 120) + "," + 20 + ")")
+    .append("text")
+    .text("Colleges Bubble Chart")
+    .attr("class", "title");
+
   function createForceSimulation() {
     forceSimulation = d3
       .forceSimulation()
