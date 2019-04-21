@@ -92,7 +92,7 @@ div.tooltip {
 }
 
 .title {
-  fill: teal;
+  fill: rgb(247, 104, 161);
   font-weight: bold;
   font-family: monospace;
   font-size: 20px;
