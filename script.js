@@ -35,7 +35,9 @@ function createBubbleChart(error, colleges) {
       "#80b1d3",
       "#fdb462",
       "#b3de69",
-      "#fccde5"
+      "#ecb0b8",
+      "#831c26",
+      "#b7707d"
     ])
     .domain(regions.values());
   var forceStrength = 0.07;
@@ -59,6 +61,13 @@ function createBubbleChart(error, colleges) {
 
   var showPublic = true;
   var showPrivate = true;
+
+  // Define the div for the tooltip
+  var div = d3
+    .select("body")
+    .append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
 
   var width = 1500;
   var height = 900;
@@ -122,6 +131,14 @@ function createBubbleChart(error, colleges) {
       .append("circle")
       .on("click", function(d) {
         createPieChart(d);
+      })
+      .on("mouseover", function(d) {
+        var thisCircle = d3.select(this);
+        createHover(d, thisCircle);
+      })
+      .on("mouseout", function(d) {
+        var thisCircle = d3.select(this);
+        clearHover(d, thisCircle);
       })
       .attr("id", function(d, i) {
         return "circle-" + i;
@@ -490,50 +507,51 @@ function createBubbleChart(error, colleges) {
           "</b>" +
           "<br/>" +
           "<br/>" +
+          "<b>" +
           "Region: " +
-          "<b>" +
+          "</b>" +
           college.Region +
-          "</b>" +
           "<br/>" +
           "<br/>" +
+          "<b>" +
           "Average Cost: " +
-          "$ " +
-          "<b>" +
+          "</b>" +
+          "$" +
           college.AverageCost +
-          "</b>" +
           "<br/>" +
           "<br/>" +
+          "<b>" +
           "Mean Earnings: " +
-          "$ " +
-          "<b>" +
+          "</b>" +
+          "$" +
           college.MeanEarnings +
-          "</b>" +
           "<br/>" +
           "<br/>" +
+          "<b>" +
           "Expenditure Per Student: " +
-          "$ " +
-          "<b>" +
+          "</b>" +
+          "$" +
           college.ExpenditurePerStudent +
-          "</b>" +
           "<br/>" +
           "<br/>" +
+          "<b>" +
           "Average Faculty Salary: " +
+          "</b>" +
           "$" +
-          "<b>" +
           college.AverageFacultySalary +
-          "</b>" +
           "<br/>" +
           "<br/>" +
+          "<b>" +
           "Average Family Income: " +
-          "$" +
-          "<b>" +
-          college.AverageFamilyIncome +
           "</b>" +
-          "<br/>" +
-          "<br/>" +
-          "Median Debt: " +
           "$" +
+          college.AverageFamilyIncome +
+          "<br/>" +
+          "<br/>" +
           "<b>" +
+          "Median Debt: " +
+          "</b>" +
+          "$" +
           college.MedianDebt +
           "</b>" +
           "<br/>" +
@@ -565,7 +583,9 @@ function createBubbleChart(error, colleges) {
         "#80b1d3",
         "#fdb462",
         "#b3de69",
-        "#fccde5"
+        "#ecb0b8",
+        "#831c26",
+        "#b7707d"
       ]);
 
     svg
