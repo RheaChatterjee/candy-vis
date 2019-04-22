@@ -5,6 +5,13 @@ body {
   font-family: sans-serif;
 }
 
+h5 {
+  color: rgb(102, 194, 165);
+  font-family: "Courier New", Courier, monospace;
+  font-weight: bold;
+  font-size: 20px;
+}
+
 #controls {
   font-size: 18px;
   margin-bottom: 10px;
@@ -95,5 +102,5 @@ div.tooltip {
   fill: rgb(247, 104, 161);
   font-weight: bold;
   font-family: monospace;
-  font-size: 20px;
+  font-size: 25px;
 }
